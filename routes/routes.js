@@ -1,0 +1,37 @@
+import express from "express";
+import userController from "../controllers/userController.js";
+import playlistController from "../controllers/playlistController.js";
+import trackController from "../controllers/trackController.js";
+import { multipleMulter, singleImage, singleMulter } from "../middlewares/multer-config.js";
+import eventController from "../controllers/eventController.js";
+import messageController from "../controllers/messageController.js";
+
+const router = express.Router();
+
+router.post("/login", userController.Login);
+router.post("/register", userController.Register);
+router.post('/createPlaylist', userController.getCurrentUser, playlistController.createPlaylist);
+router.post('/addTrackToPlaylist/:trackId', userController.getCurrentUser, playlistController.addTrackToPlaylist);
+router.post('/removeTrackFromPlaylist/:trackId', userController.getCurrentUser, playlistController.removeTrackFromPlaylist);
+router.post('/addTrack', singleMulter, userController.getCurrentUser, trackController.addTrack);
+router.post('/uploadTrack', singleMulter, trackController.uploadTrack);
+router.get('/fetchTracks', trackController.fetchTracks);
+router.post('/likeTrack/:trackId', userController.getCurrentUser, trackController.likeTrack);
+router.get('/getCurrentUserReleases', userController.getCurrentUser, trackController.fetchCurrentUserReleases);
+router.get('/getTrack/:trackId', trackController.getTrack);
+router.get('/getPlaylists', userController.getCurrentUser, playlistController.getCurrentUserPlaylists);
+router.get('/getPlaylist/:playlistId', playlistController.getPlaylistById);
+router.post('/commentPlaylist/:playlistId', userController.getCurrentUser, playlistController.commentPlaylist);
+router.post('/mergeTracks', multipleMulter, userController.getCurrentUser, trackController.mergeTracks);
+router.get('/fetchLikedTracks', userController.getCurrentUser, trackController.fetchLikedTracks);
+router.post('/addevent', singleImage, userController.getCurrentUser, eventController.createEvent);
+router.post('/updateevent/:eventId', singleImage, userController.getCurrentUser, eventController.updateEvent);
+router.get('/getevents', eventController.getEvents);
+router.get('/event/:eventId', eventController.getEvent);
+router.delete('/event/:eventId/delete', userController.getCurrentUser, eventController.deleteEvent);
+router.post('/event/:eventId/save' , userController.getCurrentUser, eventController.saveEvent);
+router.get('/fetchsavedevents', userController.getCurrentUser, eventController.fetchSavedEvents);
+router.post("/addmsg", messageController.addMessage);
+router.post("/getmsg", messageController.getMessages);
+router.get('/getusers', userController.getCurrentUser, userController.getUsers);
+export default router;
