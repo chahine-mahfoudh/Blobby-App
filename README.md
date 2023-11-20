@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Getting Started with Looby
+Loby is the new web and mobile solution for young musician developed to help them boost their careers. It helps them compose and stream their music online. Also, artists can collaborate and make events. Loby developed using ReactJS, Flutter and NodeJS
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
